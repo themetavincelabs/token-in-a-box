@@ -1,0 +1,43 @@
+#python sandbox https://pythonsandbox.com/
+
+
+#https://www.online-python.com/
+
+fd_tokens = int(input("How many fully diluted tokens? "))
+print(fd_tokens)
+
+#define variable to operate on
+composition = 0
+
+#user inputs to operate on (airdrop, team, contributors, investors)
+airdrop = float(input("Enter the (%) you want to airdrop, if none, enter 0"))
+airdrop = airdrop / 100
+
+team = float(input("Enter the (%) allocated for the team, if none, enter 0"))
+team = team / 100
+
+contributors = float(input("Enter the (%) allocated for launch contributors, if none, enter 0"))
+contributors = contributors / 100
+
+investors = float(input("Enter the (%) allocated to investors, if none, enter 0"))
+investors = investors / 100
+
+
+composition_no_eco = airdrop + team + contributors + investors
+ecosystem = (1-composition_no_eco)
+
+#token amounts
+airdrop_tokens = fd_tokens * airdrop
+team_tokens = fd_tokens * team
+contributors_tokens = fd_tokens * contributors
+investors_tokens = fd_tokens * investors
+ecosystem_tokens = fd_tokens * ecosystem
+
+
+#user outputs
+print(f"You allocated {ecosystem}% to the ecosystem, {airdrop} % to the airdrop, {team}% to the team, {contributors}% to contributors and {investors}% to investors.")
+print(f"This results in {ecosystem_tokens} tokens to the ecosystem, {team_tokens} to the team, {contributors_tokens} to contributors and {investors_tokens} to investors.")
+
+
+
+
