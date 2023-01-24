@@ -1,0 +1,134 @@
+#https://www.online-python.com/
+
+###IMPORT LIBRARIES###
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+###STARTER QUESTIONS###
+fd_tokens = int(input("How many fully diluted tokens? "))
+print(fd_tokens)
+
+#define variable to operate on
+composition = 0
+
+#user inputs to operate on (airdrop, team, contributors, investors)
+airdrop = float(input("Enter the (%) you want to airdrop, if none, enter 0"))
+airdrop = airdrop / 100
+
+team = float(input("Enter the (%) allocated for the team, if none, enter 0"))
+team = team / 100
+
+contributors = float(input("Enter the (%) allocated for launch contributors, if none, enter 0"))
+contributors = contributors / 100
+
+investors = float(input("Enter the (%) allocated to investors, if none, enter 0"))
+investors = investors / 100
+
+composition_no_eco = airdrop + team + contributors + investors
+ecosystem = (1-composition_no_eco)
+
+#FD token amounts
+airdrop_tokens = fd_tokens * airdrop
+team_tokens = fd_tokens * team
+contributors_tokens = fd_tokens * contributors
+investors_tokens = fd_tokens * investors
+ecosystem_tokens = fd_tokens * ecosystem
+
+
+#user outputs
+print(f"You allocated {ecosystem}% to the ecosystem, {airdrop} % to the airdrop, {team}% to the team, {contributors}% to contributors and {investors}% to investors.")
+print(f"This results in {ecosystem_tokens} tokens to the ecosystem, {team_tokens} to the team, {contributors_tokens} to contributors and {investors_tokens} to investors.")
+
+
+###DAY 1 TOKEN CALCULATIONS###
+#day 1 unlock (%)
+airdrop_day1_unlock_p = float(input("Enter the (%) unlocked on day 1 for the airdrop, if none, enter 0"))
+airdrop_day1_unlock_p = airdrop_day1_unlock_p / 100
+team_day1_unlock_p = float(input("Enter the (%) unlocked on day 1 for the team, if none, enter 0"))
+team_day1_unlock_p = team_day1_unlock_p / 100
+contributors_day1_unlock_p = float(input("Enter the (%) unlocked on day 1 for the contributors, if none, enter 0"))
+contributors_day1_unlock_p = contributors_day1_unlock_p / 100
+investors_day1_unlock_p = float(input("Enter the (%) unlocked on day 1 for the investors, if none, enter 0"))
+investors_day1_unlock_p = investors_day1_unlock_p / 100
+ecosystem_day1_unlock_p = float(input("Enter the (%) unlocked on day 1 for the ecosystem, if none, enter 0"))
+ecosystem_day1_unlock_p = ecosystem_day1_unlock_p / 100
+
+#day 1 token unlocks
+airdrop_day1_unlock_t = airdrop_day1_unlock_p * airdrop_tokens
+team_day1_unlock_t = team_day1_unlock_p * team_tokens
+contributors_day1_unlock_t = contributors_day1_unlock_p * contributors_tokens
+investors_day1_unlock_t = investors_day1_unlock_p * investors_tokens
+ecosystem_day1_unlock_t = ecosystem_day1_unlock_p * ecosystem_tokens
+
+###intermediate calc for "vestable tokens"###
+airdrop_vt = airdrop_tokens - airdrop_day1_unlock_t
+team_vt = team_tokens - team_day1_unlock_t
+contributors_vt = contributors_tokens - contributors_day1_unlock_t
+investors_vt = investors_tokens - investors_day1_unlock_t
+ecosystem_vt = ecosystem_tokens - ecosystem_day1_unlock_t
+
+
+###PIE CHART OUTPUTS###
+#put day 1 pie chart info into an array
+fd_pie_chart = [airdrop_day1_unlock_p,team_day1_unlock_p,contributors_day1_unlock_p,investors_day1_unlock_p,ecosystem_day1_unlock_p]
+
+#pie chart output
+plt.title('Day 1 Token Composition')
+fd_pie_labels = ["Airdrop", "Team", "Contributors", "Investors", "Ecosystem"]
+plt.pie(fd_pie_chart, labels = fd_pie_labels, autopct='%1.1f%%')
+#plt.legend()
+plt.show()
+
+#put FD pie chart info into an array
+fd_pie_chart = [airdrop, team, contributors, investors, ecosystem]
+
+#pie chart output
+plt.title('Fully Diluted Token Composition')
+fd_pie_labels = ["Airdrop", "Team", "Contributors", "Investors", "Ecosystem"]
+plt.pie(fd_pie_chart, labels = fd_pie_labels, autopct='%1.1f%%')
+#plt.legend()
+plt.show()
+
+
+###LOCK UP DETAILS###
+#insert lock up details (in months)
+airdrop_lock = int(input("Enter the #months for the airdrop lock up, if none, enter 0"))
+team_lock = int(input("Enter the #months for the team lock up, if none, enter 0"))
+contributors_lock = int(input("Enter the #months for the contributors lock up, if none, enter 0"))
+investors_lock = int(input("Enter the #months for the investors lock up, if none, enter 0"))
+ecosystem_lock = int(input("Enter the #months for the ecosystem lock up, if none, enter 0"))
+
+#put the lock up data into a numpy array
+lock_up = np.array([airdrop_lock, team_lock, contributors_lock, investors_lock, ecosystem_lock])
+print(lock_up)
+
+
+###VESTING DETAILS###
+#insert vesting details (in months)
+airdrop_vest = int(input("Enter the #months for the airdrop vest, if none, enter 0"))
+team_vest = int(input("Enter the #months for the team vest, if none, enter 0"))
+contributors_vest = int(input("Enter the #months for the contributors vest, if none, enter 0"))
+investors_vest = int(input("Enter the #months for the investors vest, if none, enter 0"))
+ecosystem_vest = int(input("Enter the #months for the ecosystem vest, if none, enter 0"))
+
+#put the vesting up data into a numpy array
+vest = np.array([airdrop_vest, team_vest, contributors_vest, investors_vest, ecosystem_vest])
+print(vest)
+
+
+###LOOP FOR TOKEN INFLATION###
+
+#use team as an example, then repeat for others 
+#loop through each category to create the vest over time
+
+#define a variable to operate on
+#define an array to then append the tokens onto based on the vested tokens
+team_tokens = team_day1_unlock_t
+team_tokens_array = np.array([])
+
+#loop through the # of vesting months to append the tokens vested into an array
+for i in range(team_vest + 1):
+    team_tokens += team_vt/team_vest
+    #team_tokens_array = np.append( , [team_tokens])
+    print(team_tokens_array)
